@@ -7,13 +7,10 @@ import {
   Post,
   Put,
   Query,
-  UploadedFile,
-  UseInterceptors,
 } from '@nestjs/common';
 import { NoticeService } from './notices.service';
 import { CreateNoticeDto } from './dto/create-notice.dto';
 import { UpdateNoticeDto } from './dto/update-notice.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('notice')
 export class NoticeController {
