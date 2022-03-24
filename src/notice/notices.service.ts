@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Notice, NoticeDocument } from './notice.shcema';
+import { Notice, NoticeDocument } from './notices.schema';
 import { Model } from 'mongoose';
 import { CreateNoticeDto } from './dto/create-notice.dto';
 import { UpdateNoticeDto } from './dto/update-notice.dto';

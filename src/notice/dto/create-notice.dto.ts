@@ -8,5 +8,4 @@ export class CreateNoticeDto {
   fileUrl: string;
   importance: boolean;
   right: string;
-  flag: boolean;
 }

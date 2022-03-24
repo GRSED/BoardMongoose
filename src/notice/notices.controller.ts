@@ -10,7 +10,7 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { NoticeService } from './notice.service';
+import { NoticeService } from './notices.service';
 import { CreateNoticeDto } from './dto/create-notice.dto';
 import { UpdateNoticeDto } from './dto/update-notice.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -22,12 +22,6 @@ export class NoticeController {
   @Post()
   create(@Body() createNoticeDto: CreateNoticeDto) {
     return this.noticeService.create(createNoticeDto);
-  }
-
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
   }
 
   @Get()

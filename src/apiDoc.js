@@ -7,7 +7,18 @@
  * @apiQuery {String} [title] 제목
  * @apiQuery {String} [writer] 작성자
  *
- * @apiSuccess {Array} noticeList 공지사항목록
+ * @apiSuccess {Object[]} noticeList 공지사항목록
+ * @apiSuccess {String} noticeList.category 카테고리
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *      HTTP/1.1 200 OK
+ *      [{
+ *          "": "",
+ *       },
+ *       {
+ *          "": "",
+ *       }
+ *      ]
  */
 
 /**

@@ -18,7 +18,7 @@ export class Notice {
   writeDate: Date;
 
   @Prop({ default: new Date() })
-  noticeDate: Date;
+  noticeDate: string;
 
   @Prop()
   writer: string;
