@@ -16,37 +16,46 @@ import { UpdateNoticeDto } from './dto/update-notice.dto';
 export class NoticeController {
   constructor(private noticeService: NoticeService) {}
 
+  @Get()
+  async getNoticeList(
+    @Query('page') page?: number,
+    @Query('pageSize') pageSize?: number,
+  ) {
+    try {
+      const noticeListTotalCount = await this.noticeService.getTotalCount();
+      const noticeList = await this.noticeService.find(page, pageSize);
+      return noticeList;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @Get(':id')
+  getNotice(@Param('id') id: number) {
+    try {
+      return this.noticeService.findOne(id);
+    } catch (error) {
+      return error;
+    }
+  }
+
   @Post()
   create(@Body() createNoticeDto: CreateNoticeDto) {
     return this.noticeService.create(createNoticeDto);
   }
 
-  @Get()
-  find(
-    @Query('category') category?: string,
-    @Query('title') title?: string,
-    @Query('writer') writer?: string,
-  ) {
-    return this.noticeService.find(category, title, writer);
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.noticeService.findOne(id);
-  }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: number) {
     return this.noticeService.delete(id);
   }
 
-  @Delete()
-  deleteAll() {
-    return this.noticeService.deleteAll();
-  }
-
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateNoticeDto: UpdateNoticeDto) {
-    return this.noticeService.update(id, updateNoticeDto);
+  async updateNotice(@Param('id') id: number, @Body() updateNoticeDto: UpdateNoticeDto) {
+    try {
+      return this.noticeService.update(id, updateNoticeDto);
+    } catch (error) {
+      throw error;
+    }
   }
 }

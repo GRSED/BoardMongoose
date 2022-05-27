@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Notice, NoticeDocument } from './notices.schema';
+import { Notice, NoticeDocument } from './schema/notices.schema';
 import { Model } from 'mongoose';
 import { CreateNoticeDto } from './dto/create-notice.dto';
 import { UpdateNoticeDto } from './dto/update-notice.dto';
@@ -16,70 +16,45 @@ export class NoticeService {
     return await createdNotice.save();
   }
 
-  async find(
-    category?: string,
-    title?: string,
-    writer?: string,
-  ): Promise<Notice[]> {
-    if (writer) {
-      return this.noticeModel
-        .find({ writer: writer, flag: false }, '_id')
-        .exec();
-    } else if (title) {
-      if (category) {
-        return this.noticeModel
-          .find(
-            {
-              flag: true,
-              category: category,
-              title: { $regex: title, $options: 'i' },
-            },
-            'category title writeDate writer',
-          )
-          .exec();
-      } else {
-        return this.noticeModel
-          .find(
-            {
-              flag: true,
-              title: { $regex: title, $options: 'i' },
-            },
-            'category title writeDate writer',
-          )
-          .exec();
-      }
-    } else {
-      if (category) {
-        return this.noticeModel
-          .find(
-            {
-              flag: true,
-              category: category,
-            },
-            'category title writeDate writer',
-          )
-          .exec();
-      } else {
-        return this.noticeModel
-          .find({ flag: true }, 'category title writeDate writer')
-          .exec();
-      }
+  async find(page?: number, pageSize?: number): Promise<Notice[]> {
+    let searchQuery = `SELECT * FROM notice WHERE 1=1`;
+    if (page && pageSize) {
+      searchQuery += ` LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`;
     }
+    return this.noticeModel.find();
   }
 
-  async findOne(id: string): Promise<Notice> {
+  async findOne(id: number): Promise<Notice> {
     return this.noticeModel.findById(id).exec();
   }
 
-  async delete(id: string): Promise<Notice> {
+  async delete(id: number): Promise<Notice> {
     return await this.noticeModel.findByIdAndDelete(id);
   }
 
-  async deleteAll(): Promise<any> {
-    return await this.noticeModel.deleteMany();
+  async update(id: number, updateNoticeDto: UpdateNoticeDto): Promise<Notice> {
+    // const queryRunner = this.connection.createQueryRunner();
+
+    // await queryRunner.connect();
+    // await queryRunner.startTransaction();
+    // try {
+    //   const updatedDatalog = await queryRunner.manager.update(
+    //     Datalog,
+    //     id,
+    //     updateDatalogDto,
+    //   );
+    //   if (updatedDatalog.affected === 0) throw new NotFoundException();
+    //   return updateDatalogDto;
+    // } catch (error) {
+    //   await queryRunner.rollbackTransaction();
+    //   throw error;
+    // } finally {
+    //   await queryRunner.release();
+    // }
+    return await this.noticeModel.findByIdAndUpdate(id, updateNoticeDto);
   }
 
-  async update(id: string, updateNoticeDto: UpdateNoticeDto): Promise<Notice> {
-    return await this.noticeModel.findByIdAndUpdate(id, updateNoticeDto);
+  getTotalCount() {
+    return this.noticeModel.count();
   }
 }

@@ -6,9 +6,6 @@ export type NoticeDocument = Notice & Document;
 @Schema()
 export class Notice {
   @Prop()
-  category: string;
-
-  @Prop()
   title: string;
 
   @Prop()
@@ -18,22 +15,16 @@ export class Notice {
   writeDate: Date;
 
   @Prop({ default: new Date() })
-  noticeDate: string;
+  noticeDate: Date;
 
   @Prop()
   writer: string;
 
   @Prop()
-  fileUrl: string;
+  importance: number;
 
-  @Prop()
-  importance: boolean;
-
-  @Prop()
-  right: string;
-
-  @Prop({ default: false })
-  flag: boolean;
+  @Prop({ default: 1 })
+  isOpen: number;
 }
 
 export const NoticeSchema = SchemaFactory.createForClass(Notice);
