@@ -14,17 +14,14 @@ import { UpdateNoticeDto } from './dto/update-notice.dto';
 
 @Controller('notice')
 export class NoticeController {
-  constructor(private noticeService: NoticeService) {}
+  constructor(
+    private noticeService: NoticeService,
+  ) {}
 
   @Get()
-  async getNoticeList(
-    @Query('page') page?: number,
-    @Query('pageSize') pageSize?: number,
-  ) {
+  async getNoticeList() {
     try {
-      const noticeListTotalCount = await this.noticeService.getTotalCount();
-      const noticeList = await this.noticeService.find(page, pageSize);
-      return noticeList;
+      return await this.noticeService.find();;
     } catch (error) {
       throw error;
     }
@@ -35,19 +32,27 @@ export class NoticeController {
     try {
       return this.noticeService.findOne(id);
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
   @Post()
   create(@Body() createNoticeDto: CreateNoticeDto) {
+    try {
     return this.noticeService.create(createNoticeDto);
+    } catch (error) {
+      throw error;
+    }
   }
 
 
   @Delete(':id')
   delete(@Param('id') id: number) {
+    try {
     return this.noticeService.delete(id);
+    } catch (error) {
+      throw error;
+    }
   }
 
   @Put(':id')

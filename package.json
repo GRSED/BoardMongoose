@@ -26,13 +26,17 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/mongoose": "^9.0.2",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/serve-static": "^2.2.2",
     "@nestjs/typeorm": "^8.0.3",
     "mongoose": "^6.2.4",
     "mysql2": "^2.3.3",
+    "nest-winston": "^1.6.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.2.44"
+    "typeorm": "^0.2.44",
+    "winston": "^3.7.2",
+    "winston-daily-rotate-file": "^4.6.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

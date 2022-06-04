@@ -16,11 +16,7 @@ export class NoticeService {
     return await createdNotice.save();
   }
 
-  async find(page?: number, pageSize?: number): Promise<Notice[]> {
-    let searchQuery = `SELECT * FROM notice WHERE 1=1`;
-    if (page && pageSize) {
-      searchQuery += ` LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`;
-    }
+  async find(): Promise<Notice[]> {
     return this.noticeModel.find();
   }
 
@@ -33,28 +29,6 @@ export class NoticeService {
   }
 
   async update(id: number, updateNoticeDto: UpdateNoticeDto): Promise<Notice> {
-    // const queryRunner = this.connection.createQueryRunner();
-
-    // await queryRunner.connect();
-    // await queryRunner.startTransaction();
-    // try {
-    //   const updatedDatalog = await queryRunner.manager.update(
-    //     Datalog,
-    //     id,
-    //     updateDatalogDto,
-    //   );
-    //   if (updatedDatalog.affected === 0) throw new NotFoundException();
-    //   return updateDatalogDto;
-    // } catch (error) {
-    //   await queryRunner.rollbackTransaction();
-    //   throw error;
-    // } finally {
-    //   await queryRunner.release();
-    // }
     return await this.noticeModel.findByIdAndUpdate(id, updateNoticeDto);
-  }
-
-  getTotalCount() {
-    return this.noticeModel.count();
   }
 }
